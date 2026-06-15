@@ -465,7 +465,7 @@ ${NOTES}
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
                 url="${RELEASE_URL}"
-                sparkle:version="${MARKETING_VERSION}"
+                sparkle:version="${BUILD_NUMBER}"
                 sparkle:shortVersionString="${MARKETING_VERSION}"
                 length="${ZIP_LENGTH}"
                 type="application/octet-stream"

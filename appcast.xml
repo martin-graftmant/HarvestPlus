@@ -22,7 +22,7 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
                 url="https://github.com/Graftmant/HarvestPlus/releases/download/v1.0.1/HarvestPlus.app.zip"
-                sparkle:version="1.0.1"
+                sparkle:version="2"
                 sparkle:shortVersionString="1.0.1"
                 length="3524622"
                 type="application/octet-stream"
