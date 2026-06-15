@@ -5,6 +5,17 @@ All notable changes to HarvestPlus will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-07
+
+### Fixed
+
+- **Overtime indicator overflowed the progress bar.** When you logged past
+  your daily target, the overtime marker extended past the end of the bar. It
+  now stays within the bar, shown as a red cap on the right end.
+- **Newly added Harvest projects were missing from the meeting entry picker.**
+  The project list now refreshes each time you log a meeting, so projects added
+  in Harvest show up right away instead of only after an app restart.
+
 ## [1.0.0] - 2026-06-01
 
 Initial public release.
