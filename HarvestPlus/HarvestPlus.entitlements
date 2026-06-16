@@ -40,6 +40,13 @@
 	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
 	<array>
 		<string>org.sparkle-project.InstallerLauncher</string>
+		<!-- Required for the sandboxed install step: the app talks to Sparkle's
+		     running installer over these services while the update is applied.
+		     Without them the download succeeds but the install fails with
+		     "An error occurred while running the updater". Hardcoded because the
+		     release re-sign only expands $(AppIdentifierPrefix), not the bundle id. -->
+		<string>com.graftmant.harvestplus-spks</string>
+		<string>com.graftmant.harvestplus-spki</string>
 	</array>
 </dict>
 </plist>
