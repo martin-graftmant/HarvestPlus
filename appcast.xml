@@ -6,27 +6,29 @@
         <description>HarvestPlus update feed.</description>
         <language>en</language>
         <item>
-            <title>Version 1.0.1</title>
-            <pubDate>Fri, 12 Jun 2026 10:31:57 +0000</pubDate>
+            <title>Version 1.0.2</title>
+            <link>https://github.com/Graftmant/HarvestPlus/releases/latest</link>
+            <pubDate>Tue, 16 Jun 2026 07:07:18 +0000</pubDate>
             <description><![CDATA[
 
 ### Fixed
 
-- **Overtime indicator overflowed the progress bar.** When you logged past
-  your daily target, the overtime marker extended past the end of the bar. It
-  now stays within the bar, shown as a red cap on the right end.
-- **Newly added Harvest projects were missing from the meeting entry picker.**
-  The project list now refreshes each time you log a meeting, so projects added
-  in Harvest show up right away instead of only after an app restart.
+- **Automatic updates could not install.** The app is sandboxed, and Sparkle
+  needs two extra entitlements to hand a downloaded update to its installer.
+  Without them, updates downloaded but failed with "an error occurred while
+  running the updater." Added the required entitlements so updates install
+  cleanly. Because earlier builds were missing them, this version must be
+  installed manually once; after that, updates apply automatically again.
             ]]></description>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:informationalUpdate></sparkle:informationalUpdate>
             <enclosure
-                url="https://github.com/Graftmant/HarvestPlus/releases/download/v1.0.1/HarvestPlus.app.zip"
-                sparkle:version="2"
-                sparkle:shortVersionString="1.0.1"
-                length="3524622"
+                url="https://github.com/Graftmant/HarvestPlus/releases/download/v1.0.2/HarvestPlus.app.zip"
+                sparkle:version="3"
+                sparkle:shortVersionString="1.0.2"
+                length="3525032"
                 type="application/octet-stream"
-                sparkle:edSignature="df8mU+tvVGnGA4lYAC5rh1fAavj2lcFVLYBKSn1jzggZUirT8bxawQPViKQnoJ80xzPTKTz+K3lXWvjUFoB8Cw==" />
+                sparkle:edSignature="BgZi1GzOyBDh7FHWJ7H/4mR/b7WCv/xHUSRitQbwuA2vepK45M7IM6UW/2GDO1i2BYQXiyUkx+r6m807TfXQBQ==" />
         </item>
     </channel>
 </rss>
