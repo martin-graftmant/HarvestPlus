@@ -5,6 +5,15 @@ All notable changes to HarvestPlus will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-06-16
+
+### Fixed
+
+- **Frequent "couldn't load projects" errors.** The meeting entry sheet was
+  re-fetching your Harvest projects every time it opened, so a slow or flaky
+  connection popped an error often. Projects are now cached and refreshed at
+  most once an hour, and a failed refresh quietly keeps the existing list.
+
 ## [1.0.2] - 2026-06-16
 
 ### Fixed

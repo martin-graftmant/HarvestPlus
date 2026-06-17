@@ -6,29 +6,29 @@
         <description>HarvestPlus update feed.</description>
         <language>en</language>
         <item>
-            <title>Version 1.0.2</title>
+            <title>Version 1.0.3</title>
             <link>https://github.com/Graftmant/HarvestPlus/releases/latest</link>
-            <pubDate>Tue, 16 Jun 2026 07:07:18 +0000</pubDate>
+            <pubDate>Wed, 17 Jun 2026 14:41:31 +0000</pubDate>
             <description><![CDATA[
 
 ### Fixed
 
-- **Automatic updates could not install.** The app is sandboxed, and Sparkle
-  needs two extra entitlements to hand a downloaded update to its installer.
-  Without them, updates downloaded but failed with "an error occurred while
-  running the updater." Added the required entitlements so updates install
-  cleanly. Because earlier builds were missing them, this version must be
-  installed manually once; after that, updates apply automatically again.
+- **Frequent "couldn't load projects" errors.** The meeting entry sheet was
+  re-fetching your Harvest projects every time it opened, so a slow or flaky
+  connection popped an error often. Projects are now cached and refreshed at
+  most once an hour, and a failed refresh quietly keeps the existing list.
             ]]></description>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:informationalUpdate></sparkle:informationalUpdate>
+            <sparkle:informationalUpdate>
+                <sparkle:belowVersion>3</sparkle:belowVersion>
+            </sparkle:informationalUpdate>
             <enclosure
-                url="https://github.com/Graftmant/HarvestPlus/releases/download/v1.0.2/HarvestPlus.app.zip"
-                sparkle:version="3"
-                sparkle:shortVersionString="1.0.2"
-                length="3525032"
+                url="https://github.com/Graftmant/HarvestPlus/releases/download/v1.0.3/HarvestPlus.app.zip"
+                sparkle:version="4"
+                sparkle:shortVersionString="1.0.3"
+                length="3525789"
                 type="application/octet-stream"
-                sparkle:edSignature="BgZi1GzOyBDh7FHWJ7H/4mR/b7WCv/xHUSRitQbwuA2vepK45M7IM6UW/2GDO1i2BYQXiyUkx+r6m807TfXQBQ==" />
+                sparkle:edSignature="4D4QBUuO9hU5akxwJMFozmNpqOiwYPZe7asF8uHh/mBvj8Bg8yEsbpLVgjbX0SN43FnoYOPu5LuV5YEvvi0VDQ==" />
         </item>
     </channel>
 </rss>
