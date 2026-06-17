@@ -78,9 +78,9 @@ struct MeetingEntrySheet: View {
         }
         .frame(width: 460, height: 560)
         .task {
-            // Force a refresh each time the sheet opens so projects added in
-            // Harvest since the app launched show up in the picker.
-            await appState.loadProjectAssignmentsIfNeeded(force: true)
+            // Refresh on a cadence (see loadProjectAssignmentsIfNeeded) so new
+            // Harvest projects appear without refetching on every open.
+            await appState.loadProjectAssignmentsIfNeeded()
             prefillFromMemoryIfPossible()
         }
     }

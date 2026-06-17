@@ -63,6 +63,9 @@ final class AppState: ObservableObject {
     // Project assignments (projects + tasks the user can log against). Loaded lazily.
     @Published var projectAssignments: [ProjectAssignment] = []
     @Published var isLoadingProjectAssignments: Bool = false
+    /// When project assignments were last fetched, for the refresh cadence in
+    /// loadProjectAssignmentsIfNeeded(force:).
+    private var projectAssignmentsLastLoaded: Date?
 
     // Sparkle-based auto-updater. Initialised eagerly so the background
     // scheduler is running before the user ever opens Settings.
@@ -356,9 +359,14 @@ final class AppState: ObservableObject {
 
     // MARK: - Project Assignments (projects + tasks)
 
-    /// Load the user's project assignments if we don't already have them. Safe to call repeatedly.
+    /// Load the user's project assignments, refreshing at most once an hour.
+    /// Projects change rarely, so we cache them and avoid hitting the network
+    /// (and the error popups a flaky connection brings) on every open. Pass
+    /// `force` to refresh immediately regardless of the cache age.
     func loadProjectAssignmentsIfNeeded(force: Bool = false) async {
-        if !force && !projectAssignments.isEmpty { return }
+        let ttl: TimeInterval = 3600   // refresh at most once an hour
+        let isFresh = projectAssignmentsLastLoaded.map { Date().timeIntervalSince($0) < ttl } ?? false
+        if !force && !projectAssignments.isEmpty && isFresh { return }
         guard let client = harvestClient else { return }
 
         isLoadingProjectAssignments = true
@@ -368,8 +376,13 @@ final class AppState: ObservableObject {
             projectAssignments = assignments
                 .filter { $0.isActive && !$0.activeTasks.isEmpty }
                 .sorted { $0.project.name.localizedCaseInsensitiveCompare($1.project.name) == .orderedAscending }
+            projectAssignmentsLastLoaded = Date()
         } catch {
-            actionError = "Couldn't load projects: \(error.localizedDescription)"
+            // A background refresh failed. Keep the cached projects and stay
+            // quiet; only surface the error when we have nothing to show.
+            if projectAssignments.isEmpty {
+                actionError = "Couldn't load projects: \(error.localizedDescription)"
+            }
         }
         isLoadingProjectAssignments = false
     }
