@@ -26,6 +26,7 @@ enum BannerMode {
 struct BannerActions {
     var onSnooze: () -> Void = {}
     var onSkipForToday: () -> Void = {}
+    var onClose: () -> Void = {}
     var onStopTimer: () -> Void = {}
     var onStopAndSubtractIdle: () -> Void = {}
     var onKeepGoing: () -> Void = {}
@@ -261,23 +262,42 @@ struct BannerView: View {
     // MARK: - Footer (always present)
 
     private var footer: some View {
-        // Two "come back later" actions pinned to opposite corners: a short
-        // snooze on the left, skip-for-today on the right. Both have a
-        // defined duration and are guaranteed to reappear, so the nudge can
-        // never be silenced for an open-ended stretch (the reason the old
-        // "Dismiss" button was removed).
         HStack(spacing: 10) {
-            Button(action: actions.onSnooze) {
-                Label("Snooze \(snoozeDurationMinutes) min", systemImage: "clock.badge.xmark")
-            }
-            .buttonStyle(BannerFooterButtonStyle())
+            if isSummary {
+                // End-of-day / end-of-week reports are one-time; there's nothing
+                // to snooze or skip, so offer a single dismiss.
+                Spacer()
+                Button(action: actions.onClose) {
+                    Label("Close", systemImage: "xmark")
+                }
+                .buttonStyle(BannerFooterButtonStyle())
+            } else {
+                // Two "come back later" actions for the recurring nudges: a short
+                // snooze on the left, skip-for-today on the right. Both have a
+                // defined duration and are guaranteed to reappear, so the nudge
+                // can never be silenced for an open-ended stretch (the reason the
+                // old open-ended "Dismiss" button was removed).
+                Button(action: actions.onSnooze) {
+                    Label("Snooze \(snoozeDurationMinutes) min", systemImage: "clock.badge.xmark")
+                }
+                .buttonStyle(BannerFooterButtonStyle())
 
-            Spacer()
+                Spacer()
 
-            Button(action: actions.onSkipForToday) {
-                Label("Skip for today", systemImage: "calendar.badge.minus")
+                Button(action: actions.onSkipForToday) {
+                    Label("Skip for today", systemImage: "calendar.badge.minus")
+                }
+                .buttonStyle(BannerFooterButtonStyle())
             }
-            .buttonStyle(BannerFooterButtonStyle())
+        }
+    }
+
+    /// End-of-day / end-of-week summaries are one-time reports, not recurring
+    /// nudges, so their footer is a plain Close rather than snooze / skip.
+    private var isSummary: Bool {
+        switch mode {
+        case .eodSummary, .eowSummary: return true
+        default: return false
         }
     }
 

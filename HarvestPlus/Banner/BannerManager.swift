@@ -201,6 +201,9 @@ final class BannerManager: ObservableObject {
             onSkipForToday: { [weak self] in
                 self?.skipForToday()
             },
+            onClose: { [weak self] in
+                self?.hideBanner()
+            },
             onStopTimer: { [weak self] in
                 Task {
                     await self?.appState?.stopCurrentTimer()
